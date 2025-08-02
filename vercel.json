@@ -1,0 +1,22 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/server.js"
+      }
+    ],
+    "env": {
+      "NODE_ENV": "production",
+      "MONGO_URL": "mongodb+srv://chabdullah:abdullah21@backend.tr2ys.mongodb.net/?retryWrites=true&w=majority&appName=backend",
+      "ADMIN_TOKEN": "adslanefff3242klnkljsfadnkl23j4ndsa324jlakehl",
+      "CLOUDINARY_CLOUD_NAME": "dwrukwox4",
+      "CLOUDINARY_UPLOAD_PRESET": "iamges"
+    }
+  } 
