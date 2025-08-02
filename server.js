@@ -23,12 +23,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
+  origin: ['https://retrosmart-v2.vercel.app', 'https://retrosmart.co.uk/', 'http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`=== REQUEST LOG ===`);
