@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 import blogroute from './routes/blog.route.js';
 import PasscodeRoute from './routes/passcode.route.js';
 import adminRoute from './routes/admin.route.js';
+import commentRoute from './routes/comment.route.js';
 
 import connecttodb from './config/db.config.js';
 
@@ -50,6 +51,7 @@ app.get('/', (req, res) => {
 app.use('/api', blogroute);
 app.use('/api/verification', PasscodeRoute);
 app.use('/api/admin', adminRoute);
+app.use('/api', commentRoute);
 
 // Error handling middleware
 app.use((error, req, res, next) => {
