@@ -14,12 +14,12 @@ import adminRoute from './routes/admin.route.js';
 
 import connecttodb from './config/db.config.js';
 
+// connecttodb(); // Temporarily disabled for testing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-connecttodb();
 
 app.use(cors({
-  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173', 'https://v2-db.vercel.app', '*'], // Allow all origins for development
+  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
