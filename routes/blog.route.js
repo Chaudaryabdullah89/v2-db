@@ -8,13 +8,18 @@ const router = express.Router();
 // GET all published blogs
 router.get('/blogs', async (req, res) => {
   try {
+    console.log('=== BLOG FETCH REQUEST START ===');
+    console.log('Request query params:', req.query);
+    
     const { page = 1, limit = 10, tag, search } = req.query;
+    console.log('Parsed params:', { page, limit, tag, search });
     
     let query = { status: 'published' };
-    
+    console.log('Initial query:', query);
     
     if (tag) {
       query.tags = { $in: [tag] };
+      console.log('Added tag filter, query now:', query);
     }
     if (search) {
       query.$or = [
@@ -22,7 +27,11 @@ router.get('/blogs', async (req, res) => {
         { content: { $regex: search, $options: 'i' } },
         { excerpt: { $regex: search, $options: 'i' } }
       ];
+      console.log('Added search filter, query now:', query);
     }
+    
+    console.log('Final query to execute:', JSON.stringify(query, null, 2));
+    console.log('About to execute Blog.find()...');
     
     const blogs = await Blog.find(query)
       .sort({ createdAt: -1 })
@@ -30,9 +39,15 @@ router.get('/blogs', async (req, res) => {
       .skip((page - 1) * limit)
       .select('-__v');
     
-    const total = await Blog.countDocuments(query);
+    console.log('Blog.find() completed successfully');
+    console.log('Number of blogs found:', blogs.length);
+    console.log('Blogs data:', blogs.map(b => ({ id: b._id, title: b.title, status: b.status })));
     
-    res.json({
+    console.log('About to execute Blog.countDocuments()...');
+    const total = await Blog.countDocuments(query);
+    console.log('Total documents count:', total);
+    
+    const response = {
       success: true,
       data: blogs,
       pagination: {
@@ -42,10 +57,25 @@ router.get('/blogs', async (req, res) => {
         hasNext: page * limit < total,
         hasPrev: page > 1
       }
-    });
+    };
+    
+    console.log('Sending response:', JSON.stringify(response, null, 2));
+    console.log('=== BLOG FETCH REQUEST END ===');
+    
+    res.json(response);
   } catch (error) {
-    console.error('Error fetching blogs:', error);
-    res.status(500).json({ success: false, message: 'Error fetching blogs' });
+    console.error('=== BLOG FETCH ERROR ===');
+    console.error('Error type:', error.constructor.name);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    console.error('Full error object:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+    console.error('=== END BLOG FETCH ERROR ===');
+    
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error fetching blogs',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 

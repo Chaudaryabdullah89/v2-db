@@ -77,4 +77,8 @@ BlogSchema.pre('save', function(next) {
 
 const Blog = mongoose.model('Blog', BlogSchema);
 
+// Add logging to track model usage
+console.log('Blog model created successfully');
+console.log('Blog schema fields:', Object.keys(BlogSchema.paths));
+
 export default Blog; 
