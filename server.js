@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 connecttodb();
 
 app.use(cors({
-  origin: 'https://retrosmart-v2.vercel.app , http://localhost:5173', // your frontend URL
+  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173'], // your frontend URL
   credentials: true
 }));
 
