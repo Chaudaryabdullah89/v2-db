@@ -14,7 +14,7 @@ import adminRoute from './routes/admin.route.js';
 
 import connecttodb from './config/db.config.js';
 
-// connecttodb(); // Temporarily disabled for testing
+connecttodb(); // Temporarily disabled for testing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
