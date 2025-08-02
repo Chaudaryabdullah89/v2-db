@@ -19,8 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 connecttodb();
 
 app.use(cors({
-  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173'], // your frontend URL
-  credentials: true
+  origin: ['https://retrosmart-v2.vercel.app', 'http://localhost:5173', 'https://v2-db.vercel.app', '*'], // Allow all origins for development
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 
